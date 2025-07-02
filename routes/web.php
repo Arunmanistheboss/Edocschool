@@ -1,9 +1,20 @@
 <?php
-
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\TeacherController as TeacherController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+    if (auth()->check()) {
+        $user = auth()->user();
+
+        if ($user->admin()->exists()) {
+            return redirect()->route('admin.dashboard');
+        }
+
+
+    }
+
     return view('welcome');
 });
 
@@ -16,5 +27,16 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::middleware(['auth', 'role_type:admin'])->group(function () {
+    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::resource('teachers', TeacherController::class);
+    });
+    
+});
+
+
 
 require __DIR__.'/auth.php';
