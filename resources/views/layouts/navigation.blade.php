@@ -40,6 +40,11 @@
 
                         
                     @endif
+                    @if (auth()->user()?->getRoleType() === 'teacher')
+                        <x-nav-link :href="route('teacher.folders.index')" :active="request()->routeIs('teacher.folders.*')">
+                            Dossier
+                        </x-nav-link>
+                    @endif
 
                 </div>
             </div>
@@ -106,6 +111,11 @@
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.school_classes.index')" :active="request()->routeIs('admin.school_classes.*')">
                     Classes
+                </x-responsive-nav-link>
+            @endif
+            @if (auth()->user()?->getRoleType() === 'teacher')
+                 <x-responsive-nav-link :href="route('teacher.folders.index')" :active="request()->routeIs('teacher.folders.*')">
+                    Dossier
                 </x-responsive-nav-link>
             @endif
         </div>

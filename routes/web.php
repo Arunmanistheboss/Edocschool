@@ -1,9 +1,12 @@
 <?php
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Teacher\DashboardController as TeacherDashboardController;
 use App\Http\Controllers\Admin\SchoolClassContoller;
 use App\Http\Controllers\Admin\StudentController as StudentController;
 use App\Http\Controllers\Admin\TeacherController as TeacherController;
+use App\Http\Controllers\teacher\FileController;
+use App\Http\Controllers\Teacher\FolderController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -13,6 +16,9 @@ Route::get('/', function () {
         if ($user->admin()->exists()) {
             return redirect()->route('admin.dashboard');
         }
+        if ($user->teacher()->exists()) {
+            return redirect()->route('teacher.dashboard');
+        }
 
 
     }
@@ -20,9 +26,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -39,6 +43,22 @@ Route::middleware(['auth', 'role_type:admin'])->group(function () {
         Route::resource('school_classes', SchoolClassContoller::class);
     });
     
+});
+
+Route::middleware(['auth', 'role_type:teacher'])->group(function () {
+    Route::get('/teacher/dashboard', [TeacherDashboardController::class, 'index'])->name('teacher.dashboard');
+
+    // Ajouter ici ci-dessous
+     Route::prefix('teacher')->name('teacher.')->group(function () {
+        Route::resource('folders', FolderController::class);
+    });
+
+     // Ajouter ici ci-dessous
+    Route::post('/teacher/folders/{folder}/files', [FileController::class, 'store'])
+        ->name('teacher.files.store');
+    // Ajouter ici ci-dessous
+    Route::delete('/teacher/files/{file}', [FileController::class, 'destroy'])
+        ->name('teacher.files.destroy');
 });
 
 
