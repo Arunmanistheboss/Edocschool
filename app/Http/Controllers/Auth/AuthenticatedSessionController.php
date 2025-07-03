@@ -36,6 +36,9 @@ class AuthenticatedSessionController extends Controller
         if ($user->teacher()->exists()) {
             return redirect()->route('teacher.dashboard');
         }
+        if ($user->student()->exists()) {
+            return redirect()->route('student.dashboard');
+        }
 
         return redirect('/'); // fallback si aucun rôle trouvé
     }

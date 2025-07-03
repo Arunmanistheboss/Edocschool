@@ -2,11 +2,13 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Teacher\DashboardController as TeacherDashboardController;
+use App\Http\Controllers\Student\DashboardController as StudentDashboardController;
 use App\Http\Controllers\Admin\SchoolClassContoller;
 use App\Http\Controllers\Admin\StudentController as StudentController;
 use App\Http\Controllers\Admin\TeacherController as TeacherController;
 use App\Http\Controllers\teacher\FileController;
-use App\Http\Controllers\Teacher\FolderController;
+use App\Http\Controllers\Teacher\FolderController ;
+use App\Http\Controllers\Student\FolderController as StudentFolderController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,6 +20,9 @@ Route::get('/', function () {
         }
         if ($user->teacher()->exists()) {
             return redirect()->route('teacher.dashboard');
+        }
+        if ($user->student()->exists()) {
+            return redirect()->route('student.dashboard');
         }
 
 
@@ -59,6 +64,12 @@ Route::middleware(['auth', 'role_type:teacher'])->group(function () {
     // Ajouter ici ci-dessous
     Route::delete('/teacher/files/{file}', [FileController::class, 'destroy'])
         ->name('teacher.files.destroy');
+});
+
+Route::middleware(['auth', 'role_type:student'])->group(function () {
+    Route::get('/student/dashboard', [StudentDashboardController::class, 'index'])->name('student.dashboard');
+    // Ajouter ici, ci-dessous
+    Route::get('folders', [StudentFolderController::class, 'index'])->name('student.folders.index');
 });
 
 
