@@ -30,6 +30,14 @@
                         <x-nav-link :href="route('admin.teachers.index')" :active="request()->routeIs('admin.teachers.*')">
                             Enseignants
                         </x-nav-link>
+                        <x-nav-link :href="route('admin.students.index')" :active="request()->routeIs('admin.students.*')">
+                            Élèves
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.school_classes.index')" :active="request()->routeIs('admin.school_classes.*')">
+                            Classes
+                        </x-nav-link>
+
+
                         
                     @endif
 
@@ -92,6 +100,12 @@
              @if (auth()->user()?->getRoleType() === 'admin')
                 <x-responsive-nav-link :href="route('admin.teachers.index')" :active="request()->routeIs('admin.teachers.*')">
                     Enseignants
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.students.index')" :active="request()->routeIs('admin.students.*')">
+                    Élèves
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.school_classes.index')" :active="request()->routeIs('admin.school_classes.*')">
+                    Classes
                 </x-responsive-nav-link>
             @endif
         </div>
