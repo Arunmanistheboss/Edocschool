@@ -17,7 +17,7 @@
             <input 
                 type="hidden" 
                 name="parent_id" 
-                value="{{ request()->get('parent_id') }}">
+                value="{{$parentId }}">
             {{-- ex: si on clique sur "nouveau dossier" depuis un dossier parent,
                    on garde l'ID de ce parent --}}
 

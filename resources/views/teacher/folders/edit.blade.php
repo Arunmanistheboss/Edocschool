@@ -10,8 +10,12 @@
         {{-- Formulaire de mise à jour --}}
         <form action="{{ route('teacher.folders.update', $folder->id) }}" method="POST">
             @csrf
-            @method('PUT') 
+            @method('PUT')
             {{-- Utilisation de @method('PUT') car Laravel attend une méthode PUT pour une update (HTML ne gère que GET/POST) --}}
+
+            {{-- Champ caché parent_id --}}
+            <input type="hidden" name="parent_id" value="{{ $folder->parent_id }}">
+
 
             {{-- 📝 Champ Nom du dossier --}}
             <div class="mb-4">
@@ -23,7 +27,7 @@
                 <input type="text" name="name" id="name"
                     class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                     value="{{ old('name', $folder->name) }}" required>
-                
+
                 {{-- Affichage des erreurs de validation si le champ "name" est vide ou incorrect --}}
                 @error('name')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -39,18 +43,11 @@
                     @foreach ($classes as $class)
                         <label class="inline-flex items-center">
                             {{-- Checkbox pour chaque classe disponible --}}
-                            <input 
-                                type="checkbox"
-                                name="school_class_ids[]" 
-                                value="{{ $class->id }}"
-
+                            <input type="checkbox" name="school_class_ids[]" value="{{ $class->id }}"
                                 {{-- Vérifie si la case doit être cochée :
                                      - si on a fait un submit avec erreur → old() garde la sélection
-                                     - sinon on coche celles déjà liées au dossier via $selected --}}
-                                @if (in_array($class->id, old('school_class_ids', $selected ?? []))) checked @endif
-
-                                class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500"
-                            >
+                                     - sinon on coche celles déjà liées au dossier via $selected --}} @if (in_array($class->id, old('school_class_ids', $selected ?? []))) checked @endif
+                                class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500">
                             <span class="ml-2">{{ $class->name }}</span>
                         </label>
                     @endforeach
@@ -62,8 +59,7 @@
 
             {{-- Bouton Valider --}}
             <div class="flex justify-end">
-                <button type="submit"
-                    class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
                     Mettre à jour
                 </button>
             </div>

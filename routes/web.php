@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Teacher\DashboardController as TeacherDashboardController;
@@ -7,7 +8,7 @@ use App\Http\Controllers\Admin\SchoolClassContoller;
 use App\Http\Controllers\Admin\StudentController as StudentController;
 use App\Http\Controllers\Admin\TeacherController as TeacherController;
 use App\Http\Controllers\teacher\FileController;
-use App\Http\Controllers\Teacher\FolderController ;
+use App\Http\Controllers\Teacher\FolderController;
 use App\Http\Controllers\Student\FolderController as StudentFolderController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,8 +25,6 @@ Route::get('/', function () {
         if ($user->student()->exists()) {
             return redirect()->route('student.dashboard');
         }
-
-
     }
 
     return view('welcome');
@@ -47,18 +46,20 @@ Route::middleware(['auth', 'role_type:admin'])->group(function () {
         Route::resource('students', StudentController::class);
         Route::resource('school_classes', SchoolClassContoller::class);
     });
-    
 });
 
 Route::middleware(['auth', 'role_type:teacher'])->group(function () {
     Route::get('/teacher/dashboard', [TeacherDashboardController::class, 'index'])->name('teacher.dashboard');
 
-    // Ajouter ici ci-dessous
-     Route::prefix('teacher')->name('teacher.')->group(function () {
-        Route::resource('folders', FolderController::class);
+    Route::prefix('teacher')->name('teacher.')->group(function () {
+        Route::get('folders/create/{parent?}', [FolderController::class, 'create'])->name('folders.create');
+        Route::get('folders/{folder?}', [FolderController::class, 'index'])->name('folders.index');
+        Route::post('folders', [FolderController::class, 'store'])->name('folders.store');
+        Route::get('folders/{folder}/edit', [FolderController::class, 'edit'])->name('folders.edit');
+        Route::put('folders/{folder}', [FolderController::class, 'update'])->name('folders.update');
+        Route::delete('folders/{folder}', [FolderController::class, 'destroy'])->name('folders.destroy');
     });
-
-     // Ajouter ici ci-dessous
+    // Ajouter ici ci-dessous
     Route::post('/teacher/folders/{folder}/files', [FileController::class, 'store'])
         ->name('teacher.files.store');
     // Ajouter ici ci-dessous
@@ -74,4 +75,4 @@ Route::middleware(['auth', 'role_type:student'])->group(function () {
 
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

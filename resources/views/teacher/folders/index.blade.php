@@ -26,8 +26,7 @@
                 @endphp
 
                 @foreach ($ancestors as $folder)
-                    / <a href="{{ route('teacher.folders.index', ['parent_id' => $folder->id]) }}"
-                         class="text-black-500 hover:underline">
+                    / <a href="{{ route('teacher.folders.index', $folder->id) }}" class="text-black-500 hover:underline">
                         {{ $folder->name }}
                     </a>
                 @endforeach
@@ -36,10 +35,12 @@
 
         {{-- ➕ Bouton "Nouveau dossier" --}}
         <div class="flex justify-end gap-3 mb-6">
-            <a href="{{ route('teacher.folders.create', ['parent_id' => request()->get('parent_id')]) }}"
-               class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 text-sm">
+            <a href="{{ route('teacher.folders.create', $currentFolder?->id) }}"
+                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 text-sm">
                 + Nouveau dossier
             </a>
+
+
 
             {{-- Formulaire d’upload --}}
             {{-- Bouton Upload → visible uniquement dans un sous-dossier --}}
@@ -66,12 +67,11 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             @forelse ($folders as $folder)
                 <div class="relative bg-white p-4 rounded-lg shadow hover:shadow-lg transition group">
-                    <a href="{{ route('teacher.folders.index', ['parent_id' => $folder->id]) }}"
-                       class="block text-center">
+                    <a href="{{ route('teacher.folders.index', $folder->id) }}" class="block text-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-yellow-400" fill="none"
-                             viewBox="0 0 24 24" stroke="currentColor">
+                            viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M3 7a2 2 0 012-2h4l2 2h6a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" />
+                                d="M3 7a2 2 0 012-2h4l2 2h6a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" />
                         </svg>
                         <p class="mt-2 font-semibold text-gray-800 truncate">
                             {{ $folder->name }}
@@ -89,20 +89,20 @@
                     <div class="absolute top-2 right-2">
                         <div class="relative">
                             <button onclick="toggleMenu('menu-{{ $folder->id }}')"
-                                    class="text-gray-500 hover:text-gray-700 focus:outline-none">
+                                class="text-gray-500 hover:text-gray-700 focus:outline-none">
                                 ⋯
                             </button>
                             <div id="menu-{{ $folder->id }}"
-                                 class="hidden absolute right-0 mt-2 w-32 bg-white border rounded shadow-md z-10">
+                                class="hidden absolute right-0 mt-2 w-32 bg-white border rounded shadow-md z-10">
                                 <a href="{{ route('teacher.folders.edit', $folder->id) }}"
-                                   class="block px-4 py-2 text-sm hover:bg-gray-100">
+                                    class="block px-4 py-2 text-sm hover:bg-gray-100">
                                     Modifier
                                 </a>
                                 <form method="POST" action="{{ route('teacher.folders.destroy', $folder->id) }}">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" onclick="return confirm('Supprimer ce dossier ?')"
-                                            class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
+                                        class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
                                         Supprimer
                                     </button>
                                 </form>
@@ -134,15 +134,15 @@
                                 <td class="px-4 py-2">{{ $file->type }}</td>
                                 <td class="px-4 py-2 space-x-2">
                                     <a href="{{ asset('storage/' . $file->path) }}"
-                                       class="text-blue-500 hover:underline" target="_blank">
+                                        class="text-blue-500 hover:underline" target="_blank">
                                         Télécharger
                                     </a>
                                     <form method="POST" action="{{ route('teacher.files.destroy', $file->id) }}"
-                                          class="inline">
+                                        class="inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="text-red-500 hover:underline"
-                                                onclick="return confirm('Supprimer ce fichier ?')">
+                                            onclick="return confirm('Supprimer ce fichier ?')">
                                             Supprimer
                                         </button>
                                     </form>
@@ -155,13 +155,9 @@
         @endif
 
         {{-- Popup de succès/erreur --}}
-        @if(session('error'))
-            <div 
-                x-data="{ show: true }" 
-                x-show="show" 
-                x-init="setTimeout(() => show = false, 5000)"
-                class="fixed top-4 right-4 bg-red-600 text-white px-4 py-2 rounded shadow z-50"
-            >
+        @if (session('error'))
+            <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)"
+                class="fixed top-4 right-4 bg-red-600 text-white px-4 py-2 rounded shadow z-50">
                 {{ session('error') }}
             </div>
         @endif
@@ -177,7 +173,7 @@
             menu.classList.toggle('hidden');
         }
 
-        document.addEventListener('click', function (event) {
+        document.addEventListener('click', function(event) {
             const isMenuButton = event.target.closest('button[onclick^="toggleMenu"]');
             const isInsideMenu = event.target.closest('[id^="menu-"]');
             if (!isMenuButton && !isInsideMenu) {
@@ -190,7 +186,7 @@
             const uploadForm = fileInput?.closest('form');
 
             if (fileInput && uploadForm) {
-                fileInput.addEventListener('change', function (e) {
+                fileInput.addEventListener('change', function(e) {
                     const maxSize = 10 * 1024 * 1024; // 10 Mo
                     const file = this.files[0];
 
