@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Teacher;
 
+use App\Models\Folder;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreFolderRequest extends FormRequest
@@ -23,9 +24,28 @@ class StoreFolderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:100', // Nom du dossier
-            'school_class_ids' => 'array', // Liste des classes concernées
-            'school_class_ids.*' => 'exists:school_classes,id', // Chaque ID doit exister
+           'name' => [
+                'required',
+                'string',
+                'max:100',
+                function ($attribute, $value, $fail) {
+                    $parentId = $this->input('parent_id');
+
+                    $exists = Folder::where('name', $value)
+                        ->where('parent_id', $parentId)
+                        ->exists();
+
+                    if ($exists) {
+                        $fail("Un dossier nommé '{$value}' existe déjà dans ce dossier.");
+                    }
+                },
+            ],
+            'parent_id' => [
+                'nullable',
+                'exists:folders,id'
+            ],
+            'school_class_ids' => 'array',
+            'school_class_ids.*' => 'exists:school_classes,id',
         ];
     }
 }
