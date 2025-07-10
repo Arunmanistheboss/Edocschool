@@ -42,21 +42,24 @@
             </a>
 
             {{-- Formulaire d’upload --}}
-            <form method="POST"
-                  action="{{ route('teacher.files.store', ['folder' => $currentFolder?->id ?? 0]) }}"
-                  enctype="multipart/form-data" class="inline-block" id="upload-form">
-                @csrf
-                <label for="file-input"
-                       class="cursor-pointer bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 text-sm flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                         stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M12 12v9m0 0l-3-3m3 3l3-3m-3-6a4 4 0 100-8 4 4 0 000 8z"/>
-                    </svg>
-                    Uploader un fichier
-                </label>
-                <input type="file" name="file" id="file-input" class="hidden" required>
-            </form>
+            {{-- Bouton Upload → visible uniquement dans un sous-dossier --}}
+            @if ($currentFolder)
+                <form method="POST" action="{{ route('teacher.files.store', ['folder' => $currentFolder->id]) }}"
+                    enctype="multipart/form-data" class="inline-block">
+                    @csrf
+                    <label for="file-input"
+                        class="cursor-pointer bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 text-sm flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M12 12v9m0 0l-3-3m3 3l3-3m-3-6a4 4 0 100-8 4 4 0 000 8z" />
+                        </svg>
+                        Uploader un fichier
+                    </label>
+                    <input type="file" name="file" id="file-input" class="hidden" required
+                        onchange="this.form.submit()">
+                </form>
+            @endif
         </div>
 
         {{-- 📁 Grille d'affichage des dossiers --}}
