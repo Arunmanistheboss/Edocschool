@@ -56,7 +56,7 @@ class FileController extends Controller
         ]);
 
         return redirect()
-            ->route('teacher.folders.index', ['parent_id' => $folder->id])
+            ->route('teacher.folders.index', $folder)
             ->with('success', 'Fichier uploadé avec succès.');
     }
 
