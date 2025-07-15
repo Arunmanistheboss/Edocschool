@@ -70,7 +70,7 @@ Route::middleware(['auth', 'role_type:teacher'])->group(function () {
 Route::middleware(['auth', 'role_type:student'])->group(function () {
     Route::get('/student/dashboard', [StudentDashboardController::class, 'index'])->name('student.dashboard');
     // Ajouter ici, ci-dessous
-    Route::get('folders', [StudentFolderController::class, 'index'])->name('student.folders.index');
+    Route::get('folders/{folder?}', [StudentFolderController::class, 'index'])->name('student.folders.index');
 });
 
 

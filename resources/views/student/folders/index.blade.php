@@ -27,7 +27,7 @@
 
                 @foreach ($ancestors as $folder)
                     <span>/</span>
-                    <a href="{{ route('student.folders.index', ['parent_id' => $folder->id]) }}"
+                    <a href="{{ route('student.folders.index', $folder->id) }}"
                        class="text-darck-600 hover:underline">
                         {{ $folder->name }}
                     </a>
@@ -41,7 +41,7 @@
                 <div class="group relative bg-gradient-to-tr from-yellow-100 to-yellow-50 border border-yellow-300 
                             rounded-xl p-4 shadow hover:shadow-xl hover:scale-105 transition">
 
-                    <a href="{{ route('student.folders.index', ['parent_id' => $folder->id]) }}" class="block text-center">
+                    <a href="{{ route('student.folders.index', $folder->id) }}" class="block text-center">
                         <div class="flex justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-yellow-500 group-hover:text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7a2 2 0 012-2h4l2 2h6a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" />

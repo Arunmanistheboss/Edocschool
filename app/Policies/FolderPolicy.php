@@ -22,8 +22,24 @@ class FolderPolicy
      */
     public function view(User $user, Folder $folder): bool
     {
-        // Vérifie que l'utilisateur est un prof ET qu'il est bien le créateur du dossier
-        return $user->isTeacher() && $folder->user_id === $user->id;
+       if ($user->isTeacher()) {
+            return $folder->user_id === $user->id;
+        }
+
+        if ($user->isStudent()) {
+            $student = $user->student;
+
+            if (!$student || !$student->schoolClass) {
+                return false;
+            }
+
+            return $folder->visibleToClasses()
+                ->where('school_class_id', $student->schoolClass->id)
+                ->exists();
+        }
+
+        return false;
+       
     }
 
     /**
