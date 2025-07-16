@@ -17,9 +17,9 @@ class FolderFactory extends Factory
      */
     public function definition(): array
     {
-        $teacher = \App\Models\Teacher::inRandomOrder()->first();
+        $teacher = Teacher::inRandomOrder()->first();
         return [
-           'user_id' => $teacher->id,
+           'teacher_id' => $teacher->id, // on récupère l'id du User lié au teacher
             'name' => fake()->sentence(3),
             'date_upload' => now(),
             'parent_id' => null,

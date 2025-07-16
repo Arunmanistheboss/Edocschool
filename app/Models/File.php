@@ -8,15 +8,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class File extends Model
 {
-     use HasFactory;
+    use HasFactory;
 
     protected $fillable = [
         'name',
-        'type', 
+        'type',
         'path',
         'date_upload',
         'folder_id',
-        'user_id',
+        'teacher_id',
     ];
 
     protected $casts = [
@@ -25,14 +25,11 @@ class File extends Model
 
 
 
-    /**
-     * 🔁 L'utilisateur qui a uploadé le fichier
-     * Cardinalité : n → 1
-     */
-    public function user(): BelongsTo
+    public function teacher(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Teacher::class);
     }
+
 
     /**
      * 🔁 Le dossier dans lequel est stocké le fichier

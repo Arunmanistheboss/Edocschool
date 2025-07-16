@@ -28,13 +28,13 @@ return new class extends Migration
 
             // Référence au dossier parent
             $table->foreignIdFor(Folder::class)
-                  ->constrained()
-                  ->cascadeOnDelete();
+                ->constrained()
+                ->cascadeOnDelete();
 
             // Référence à l'utilisateur qui a uploadé
-            $table->foreignIdFor(User::class)
-                  ->constrained()
-                  ->cascadeOnDelete();
+            $table->foreignId('teacher_id')
+                ->constrained('teachers')
+                ->cascadeOnDelete();
 
             $table->timestamps();
         });

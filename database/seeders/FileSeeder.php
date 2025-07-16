@@ -19,7 +19,7 @@ class FileSeeder extends Seeder
         foreach ($folders as $folder) {
             File::factory(rand(2, 5))->create([
                 'folder_id' => $folder->id,
-                'user_id' => $folder->user_id,
+                'teacher_id' => $folder->teacher_id,
             ]);
         }
     }
