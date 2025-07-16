@@ -19,7 +19,7 @@ class StudentFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(), // génère un user automatiquement
+            'id' => User::factory(), // génère un user automatiquement
             'school_class_id' => SchoolClass::inRandomOrder()->first()->id, // associe à une classe
         ];
     }

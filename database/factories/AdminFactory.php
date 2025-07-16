@@ -21,7 +21,7 @@ class AdminFactory extends Factory
     {
         return [
             // Crée un user automatiquement si pas fourni
-            'user_id' => User::factory(),
+            'id' => User::factory(),
         ];
     }
 }

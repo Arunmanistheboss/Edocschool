@@ -13,12 +13,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('teachers', function (Blueprint $table) {
-            $table->id();
-
-            // Relation OBLIGATOIRE vers users (1,1)
-            $table->foreignIdFor(User::class)
-                ->constrained()
-                ->cascadeOnDelete();
+            // Un seul champ id, clé primaire ET clé étrangère
+            $table->unsignedBigInteger('id')->primary();
+            $table->foreign('id')->references('id')->on('users')->onDelete('cascade');
 
             $table->timestamps();
         });

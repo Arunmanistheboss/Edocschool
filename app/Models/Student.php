@@ -13,7 +13,7 @@ class Student extends Model
     // Autorise l’attribution en masse de ces champs
     protected $fillable = [
         'school_class_id',
-        'user_id',
+        'id',
     ];
 
     /**
@@ -21,7 +21,7 @@ class Student extends Model
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'id');
     }
 
     /**

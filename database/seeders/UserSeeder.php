@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
             'email' => 'admin@edocshool.local',
             'password' => bcrypt('passworda'),
         ]);
-         Admin::create(['user_id' => $admin->id]);
+         Admin::create(['id' => $admin->id]);
 
         
           $teacher = User::factory()->create([
@@ -32,7 +32,7 @@ class UserSeeder extends Seeder
             'email' => 'teacher@edocshool.local',
             'password' => bcrypt('passwordt'),
         ]);
-        Teacher::create(['user_id' => $teacher->id]);
+        Teacher::create(['id' => $teacher->id]);
 
         
         $student = User::factory()->create([
@@ -41,7 +41,7 @@ class UserSeeder extends Seeder
             'email' => 'Student@edocshool.local',
             'password' => bcrypt('passwords'),
         ]);
-        Student::create(['user_id' => $student->id]);
+        Student::create(['id' => $student->id]);
 
    
         User::factory(5)->create();

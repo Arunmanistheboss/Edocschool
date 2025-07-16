@@ -18,7 +18,7 @@ class TeacherFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(), // Crée automatiquement un user lié
+            'id' => User::factory(), // Crée automatiquement un user lié
         ];
     }
 }

@@ -9,18 +9,24 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Teacher extends Model
 {
-     use HasFactory;
+    use HasFactory;
+
+    // On précise que la clé primaire s'appelle id, n'est pas auto-incrémentée et est de type int
+    protected $primaryKey = 'id';
+    public $incrementing = false;
+    protected $keyType = 'int';
 
     protected $fillable = [
-        'user_id',
+        'id',
     ];
 
     /**
-     * Chaque enseignant est un utilisateur
+     * Chaque enseignant EST un utilisateur (relation 1-1)
+     * L'id est utilisé comme clé étrangère
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'id');
     }
 
     /**

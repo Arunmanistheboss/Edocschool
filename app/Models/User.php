@@ -51,19 +51,19 @@ class User extends Authenticatable
     // Relation 1:1 entre User et Student
     public function student(): HasOne
     {
-        return $this->hasOne(Student::class);
+        return $this->hasOne(Student::class, 'id');
     }
 
     // 🔁 Relation 1:1 vers Teacher
     public function teacher(): HasOne
     {
-        return $this->hasOne(Teacher::class);
+        return $this->hasOne(Teacher::class, 'id');
     }
 
     // 🔁 Relation 1:1 vers Admin
     public function admin()
     {
-        return $this->hasOne(Admin::class);
+        return $this->hasOne(Admin::class, 'id');
     }
 
 
