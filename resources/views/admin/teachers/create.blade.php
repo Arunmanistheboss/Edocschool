@@ -29,7 +29,7 @@
 
             <!-- Mot de passe -->
             <div>
-                <x-input-label for="password" :value="'Mot de passe (facultatif)'" />
+                <x-input-label for="password" :value="'Mot de passe'" />
                 <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" />
                 <x-input-error :messages="$errors->get('password')" class="mt-2" />
             </div>
