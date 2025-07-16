@@ -19,21 +19,21 @@ class FolderSeeder extends Seeder
         foreach ($teachers as $teacher) {
             // Crée 2 dossiers racines
             $rootFolders = Folder::factory(2)->create([
-                'user_id' => $teacher->user_id,
+                'teacher_id' => $teacher->id,
                 'parent_id' => null,
             ]);
 
             foreach ($rootFolders as $root) {
                 // Crée 2 sous-dossiers
                 $subFolders = Folder::factory(2)->create([
-                    'user_id' => $teacher->user_id,
+                    'teacher_id' => $teacher->id,
                     'parent_id' => $root->id,
                 ]);
 
                 // Pour chaque sous-dossier, ajoute 1 sous-sous-dossier
                 foreach ($subFolders as $sub) {
                     Folder::factory()->create([
-                        'user_id' => $teacher->user_id,
+                        'teacher_id' => $teacher->id,
                         'parent_id' => $sub->id,
                     ]);
                 }

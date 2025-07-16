@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Folder;
-use App\Models\User;
+use App\Models\Teacher;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,18 +18,22 @@ class FileFactory extends Factory
      */
     public function definition(): array
     {
-       $type = fake()->randomElement(['pdf', 'docx', 'txt']);
-    $fileName = fake()->slug() . '.' . $type;
+        $type = fake()->randomElement(['pdf', 'docx', 'txt']);
+        $fileName = fake()->slug() . '.' . $type;
 
-    $folder = \App\Models\Folder::inRandomOrder()->first();
+        $folder = Folder::inRandomOrder()->first();
+        if (!$folder) {
+            $teacher = Teacher::factory()->create();
+            $folder = Folder::factory()->create(['teacher_id' => $teacher->id]);
+        }
 
-    return [
-        'name' => fake()->words(3, true),
-        'type' => $type,
-        'path' => 'files/' . $fileName, // 👈 correspond au type
-        'user_id' => $folder ? $folder->user_id : \App\Models\User::inRandomOrder()->first()->id,
-        'folder_id' => $folder?->id,
-        'date_upload' => now(),
-    ];
+        return [
+            'name' => fake()->words(3, true),
+            'type' => $type,
+            'path' => 'files/' . $fileName, // 👈 correspond au type
+            'teacher_id' => $folder->teacher_id,
+            'folder_id' => $folder?->id,
+            'date_upload' => now(),
+        ];
     }
 }

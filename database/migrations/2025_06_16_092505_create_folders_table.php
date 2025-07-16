@@ -22,21 +22,20 @@ return new class extends Migration
             $table->timestamp('date_upload')->useCurrent();
 
             // Créateur du dossier
-            $table->foreignIdFor(User::class)
-                  ->constrained()
-                  ->cascadeOnDelete();
+            $table->foreignId('teacher_id')
+                ->constrained('teachers')
+                ->cascadeOnDelete();
 
             // Dossier parent (auto-référence)
             $table->foreignId('parent_id')
-                  ->nullable()
-                  ->constrained('folders')
-                  ->nullOnDelete();
+                ->nullable()
+                ->constrained('folders')
+                ->nullOnDelete();
 
             $table->timestamps();
 
             // Contrainte : interdiction de doublon de nom dans le même dossier parent
             $table->unique(['parent_id', 'name']);
-
         });
     }
 

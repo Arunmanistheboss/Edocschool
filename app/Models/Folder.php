@@ -13,7 +13,7 @@ class Folder extends Model
     use HasFactory;
 
 
-    protected $fillable = ['name', 'user_id', 'parent_id', 'date_upload'];
+    protected $fillable = ['name', 'teacher_id', 'parent_id', 'date_upload'];
 
 
     protected $casts = [
@@ -21,12 +21,12 @@ class Folder extends Model
     ];
 
 
-    public function user(): BelongsTo
+    public function teacher(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Teacher::class);
     }
 
- 
+
     public function parent(): BelongsTo
     {
         return $this->belongsTo(Folder::class, 'parent_id');
@@ -38,7 +38,7 @@ class Folder extends Model
         return $this->hasMany(Folder::class, 'parent_id');
     }
 
- 
+
     public function parentRecursive()
     {
         return $this->belongsTo(Folder::class, 'parent_id')->with('parentRecursive');
@@ -61,7 +61,7 @@ class Folder extends Model
     {
         static::deleting(function (Folder $folder) {
             $folder->files()->delete(); // suppression des fichiers
-            $folder->children()->each(fn ($child) => $child->delete()); // suppression récursive des enfants
+            $folder->children()->each(fn($child) => $child->delete()); // suppression récursive des enfants
         });
     }
 }
