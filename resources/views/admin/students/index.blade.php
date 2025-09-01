@@ -51,5 +51,11 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="mt-6">
+        <div class="flex justify-center">
+            {{ $students->onEachSide(1)->links('vendor.pagination.tailwind') }}
+        </div>
+    </div>
     </div>
 </x-app-layout>

@@ -18,7 +18,7 @@ class SchoolClassContoller extends Controller
     public function index(): View
     {
         // On récupère toutes les classes de l'école
-        $school_classes = SchoolClass::all();
+        $school_classes = SchoolClass::paginate(10);
 
         // On retourne la vue avec les données
         return view('admin.school_classes.index', compact('school_classes'));

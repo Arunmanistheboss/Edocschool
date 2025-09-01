@@ -21,7 +21,7 @@ class StudentController extends Controller
     public function index(): View
     {
         // Charge les élèves avec leurs relations user et schoolClass
-        $students = Student::with(['user', 'schoolClass'])->get();
+        $students = Student::paginate(10);
 
         // Renvoie la vue avec les données
         return view('admin.students.index', compact('students'));

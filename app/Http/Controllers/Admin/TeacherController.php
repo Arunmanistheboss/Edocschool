@@ -21,7 +21,7 @@ class TeacherController extends Controller
     public function index(): View
     {
         // Récupère tous les enseignants avec leurs infos utilisateur
-        $teachers = Teacher::with('user')->get();
+        $teachers = Teacher::paginate(10);
 
         // Affiche la vue avec les données
         return view('admin.teachers.index', compact('teachers'));
