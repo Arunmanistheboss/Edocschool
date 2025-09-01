@@ -52,7 +52,7 @@ class StudentController extends Controller
 
         // 2. Créer l'élève et l'associer à une classe (si fournie)
         Student::create([
-            'user_id' => $user->id,                         // Lien avec l'utilisateur
+            'id' => $user->id,                         // Lien avec l'utilisateur
             'school_class_id' => $request->input('school_class_id') // Optionnel : classe associée
         ]);
 

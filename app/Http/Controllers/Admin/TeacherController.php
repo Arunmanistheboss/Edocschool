@@ -56,7 +56,7 @@ class TeacherController extends Controller
 
         // Lie le user à un teacher
         $teacher = Teacher::create([
-            'user_id' => $user->id,
+            'id' => $user->id,
         ]);
 
         // on attache les classes cochées dans le formulaire
