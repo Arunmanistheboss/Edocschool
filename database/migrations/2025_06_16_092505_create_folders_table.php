@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -22,8 +23,9 @@ return new class extends Migration
             $table->timestamp('date_upload')->useCurrent();
 
             // Créateur du dossier
-            $table->foreignId('teacher_id')
-                ->constrained('teachers')
+
+            $table->foreignIdFor(Teacher::class)
+                ->constrained()
                 ->cascadeOnDelete();
 
             // Dossier parent (auto-référence)

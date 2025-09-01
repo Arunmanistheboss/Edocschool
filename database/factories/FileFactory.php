@@ -27,13 +27,13 @@ class FileFactory extends Factory
             $folder = Folder::factory()->create(['teacher_id' => $teacher->id]);
         }
 
-        return [
-            'name' => fake()->words(3, true),
-            'type' => $type,
-            'path' => 'files/' . $fileName, // 👈 correspond au type
-            'teacher_id' => $folder->teacher_id,
-            'folder_id' => $folder?->id,
-            'date_upload' => now(),
-        ];
+    return [
+        'name' => fake()->words(3, true),
+        'type' => $type,
+        'path' => 'files/' . $fileName, // 👈 correspond au type
+        'teacher_id' => $folder ? $folder->teacher_id : \App\Models\Teacher::inRandomOrder()->first()->id,
+        'folder_id' => $folder?->id,
+        'date_upload' => now(),
+    ];
     }
 }

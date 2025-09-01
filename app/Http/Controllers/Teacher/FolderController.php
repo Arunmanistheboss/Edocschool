@@ -30,12 +30,12 @@ class FolderController extends Controller
             $this->authorize('view', $currentFolder);
 
             $folders = Folder::where('parent_id', $parentId)
-                ->where('user_id', auth()->id())
+                ->where('teacher_id', auth()->id())
                 ->withCount('children')
                 ->get();
         } else {
             $folders = Folder::whereNull('parent_id')
-                ->where('user_id', auth()->id())
+                ->where('teacher_id', auth()->id())
                 ->withCount('children')
                 ->get();
         }
@@ -75,7 +75,7 @@ class FolderController extends Controller
 
         $folder = Folder::create([
             'name'      => $request->name,
-            'user_id'   => auth()->id(),
+            'teacher_id'   => auth()->id(),
             'parent_id' => $parentId,
         ]);
 

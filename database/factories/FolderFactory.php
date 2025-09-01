@@ -19,7 +19,7 @@ class FolderFactory extends Factory
     {
         $teacher = Teacher::inRandomOrder()->first();
         return [
-           'teacher_id' => $teacher->id, // on récupère l'id du User lié au teacher
+           'teacher_id' => $teacher->id,
             'name' => fake()->sentence(3),
             'date_upload' => now(),
             'parent_id' => null,

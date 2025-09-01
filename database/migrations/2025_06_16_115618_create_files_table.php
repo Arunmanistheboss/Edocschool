@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Folder;
+use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -32,9 +33,10 @@ return new class extends Migration
                 ->cascadeOnDelete();
 
             // Référence à l'utilisateur qui a uploadé
-            $table->foreignId('teacher_id')
-                ->constrained('teachers')
-                ->cascadeOnDelete();
+            $table->foreignIdFor(Teacher::class)
+                  ->constrained()
+                  ->cascadeOnDelete();
+
 
             $table->timestamps();
         });
