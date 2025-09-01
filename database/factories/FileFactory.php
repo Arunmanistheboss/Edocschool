@@ -27,7 +27,7 @@ class FileFactory extends Factory
         'name' => fake()->words(3, true),
         'type' => $type,
         'path' => 'files/' . $fileName, // 👈 correspond au type
-        'user_id' => $folder ? $folder->user_id : \App\Models\User::inRandomOrder()->first()->id,
+        'teacher_id' => $folder ? $folder->teacher_id : \App\Models\Teacher::inRandomOrder()->first()->id,
         'folder_id' => $folder?->id,
         'date_upload' => now(),
     ];

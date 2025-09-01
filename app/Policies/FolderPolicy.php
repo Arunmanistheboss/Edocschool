@@ -23,7 +23,7 @@ class FolderPolicy
     public function view(User $user, Folder $folder): bool
     {
        if ($user->isTeacher()) {
-            return $folder->user_id === $user->id;
+            return $folder->teacher_id === $user->id;
         }
 
         if ($user->isStudent()) {

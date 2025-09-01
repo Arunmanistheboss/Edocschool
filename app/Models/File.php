@@ -12,11 +12,11 @@ class File extends Model
 
     protected $fillable = [
         'name',
-        'type', 
+        'type',
         'path',
         'date_upload',
         'folder_id',
-        'user_id',
+        'teacher_id',
     ];
 
     protected $casts = [

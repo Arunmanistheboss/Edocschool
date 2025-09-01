@@ -13,7 +13,7 @@ class Folder extends Model
     use HasFactory;
 
 
-    protected $fillable = ['name', 'user_id', 'parent_id', 'date_upload'];
+    protected $fillable = ['name', 'teacher_id', 'parent_id', 'date_upload'];
 
 
     protected $casts = [

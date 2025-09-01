@@ -52,7 +52,7 @@ class FileController extends Controller
             'path' => $path,
             'date_upload' => now(),
             'folder_id' => $folder->id,
-            'user_id' => auth()->id(),
+            'teacher_id' => auth()->id(),
         ]);
 
         return redirect()

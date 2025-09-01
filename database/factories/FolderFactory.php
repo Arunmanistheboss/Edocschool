@@ -19,7 +19,7 @@ class FolderFactory extends Factory
     {
         $teacher = \App\Models\Teacher::inRandomOrder()->first();
         return [
-           'user_id' => $teacher->id,
+           'teacher_id' => $teacher->id,
             'name' => fake()->sentence(3),
             'date_upload' => now(),
             'parent_id' => null,
