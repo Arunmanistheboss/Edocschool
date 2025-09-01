@@ -10,6 +10,8 @@ class Student extends Model
 {
     use HasFactory;
 
+    public $incrementing = false;
+
     // Autorise l’attribution en masse de ces champs
     protected $fillable = [
         'school_class_id',
