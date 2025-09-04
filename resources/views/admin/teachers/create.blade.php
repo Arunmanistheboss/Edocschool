@@ -13,18 +13,21 @@
                 <label class="block text-sm font-medium text-gray-700">Prénom</label>
                 <input type="text" name="first_name" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                     required>
+                <x-input-error :messages="$errors->get('first_name')" class="mt-2" />
             </div>
 
             <div>
                 <label class="block text-sm font-medium text-gray-700">Nom</label>
                 <input type="text" name="last_name" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                     required>
+                <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
             </div>
 
             <div>
                 <label class="block text-sm font-medium text-gray-700">Email</label>
                 <input type="email" name="email" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                     required>
+                <x-input-error :messages="$errors->get('email')" class="mt-2" />
             </div>
 
             <!-- Mot de passe -->
